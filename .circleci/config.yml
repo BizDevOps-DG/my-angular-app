@@ -26,12 +26,29 @@ jobs:
           # fallback to using the latest cache if no exact match is found
           - v1-dependencies-
 
-      - run: npm install
+      - run: 
+          name: NPM Install
+          command: npm install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
         
-      # run tests!
-      - run: ng build --prod --env=prod
+      # run build!
+      - run:
+          name: Build
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "mock" ]; then
+              ng build --prod --env mock
+            elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+              ng build --prod --env prod
+            else
+              ng build --prod --env qa
+            fi
+      - run:
+          name: Create Zip Artifacts
+          command: tar -zcvf dist.tar.gz dist/
+      - store_artifacts:
+          path: dist.tar.gz
+          prefix: dist
