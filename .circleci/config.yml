@@ -2,6 +2,12 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+
+#MS Teams Notification
+notify:
+  webhooks:
+  - url: https://outlook.office.com/webhook/80632c31-e3ed-4924-bb88-c24267eb4f9c@0b1d23d8-10d1-4093-8cb7-fd0bb32f81e1/CircleCI/210858df99f84bfcbc159dc0127cdcae/cfc7a674-478f-427f-ae44-5bd2e8d7bf22
+
 version: 2
 jobs:
   build:
